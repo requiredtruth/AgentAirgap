@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "agentairgap"
+version = "0.1.0"
+description = "Audit-hook harness for offline Python agents"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "Apache-2.0"}
+authors = [{name = "RequiredTruth"}]
+[project.scripts]
+agentairgap = "agentairgap.cli:main"
+[tool.setuptools.packages.find]
+include = ["agentairgap*"]
