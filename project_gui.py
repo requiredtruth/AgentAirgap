@@ -99,13 +99,11 @@ class ControlPanel(QMainWindow):
         self._status(f"Finished with exit code {code}")
 
     def run_demo(self) -> None:
-        self._run("cli.sh", shlex.split(self.args.text()))
+        arguments = shlex.split(self.args.text())
+        self._run("cli.sh", arguments or ["--probe"])
 
     def run_tests(self) -> None:
-        if (ROOT / "test.sh").exists():
-            self._run("test.sh")
-        else:
-            self._run("cli.sh", ["--help"])
+        self._run("test.sh")
 
     def install(self) -> None:
         self._run("install.sh")

@@ -38,3 +38,5 @@ chmod +x install.sh run.sh
 ## Standard launcher
 
 `./run.sh` is the normal entry point. It runs `./install.sh` automatically when setup is missing, then opens the PySide6 control panel with live output and actions for the demo, tests, repair, and stop. Use `./cli.sh` for CLI-only operation.
+
+With no custom arguments, **Run demo** executes the built-in enforcement probe and **Run tests** compiles the project, runs the complete unit suite, and verifies the probe's JSON result.

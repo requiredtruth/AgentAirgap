@@ -22,9 +22,16 @@ jobs:
           test -f cli.sh
           test -f project_gui.py
           test ! -f doit.sh
-          bash -n install.sh run.sh cli.sh
+          test -x test.sh
+          bash -n install.sh run.sh cli.sh test.sh
           python -m py_compile project_gui.py
           grep -q 'install.sh' run.sh
           grep -q 'project_gui.py' run.sh
           grep -qi 'PySide6' install.sh
           grep -q 'cli.sh' README.md
+      - name: Exercise GUI actions offscreen
+        run: |
+          python -m venv .venv
+          ./.venv/bin/python -m pip install -e . PySide6
+          QT_QPA_PLATFORM=offscreen PROJECT_GUI_SMOKE=1 ./run.sh
+          QT_QPA_PLATFORM=offscreen ./.venv/bin/python -m tests.gui_smoke
