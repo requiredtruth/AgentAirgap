@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Callable
+import json
 
 from PySide6.QtCore import QEventLoop, QProcess, QTimer
 from PySide6.QtWidgets import QApplication
@@ -43,9 +44,11 @@ def main() -> None:
     app = QApplication([])
 
     demo = run_action(app, lambda panel: panel.run_demo())
-    assert '"returncode": 0' in demo, demo
-    assert '"socket": "blocked:' in demo, demo
-    assert '"subprocess": "blocked:' in demo, demo
+    payload = json.loads(demo[demo.index("{") :])
+    assert payload["returncode"] == 0, payload
+    probe = json.loads(payload["stdout"])
+    assert probe["socket"].startswith("blocked:"), probe
+    assert probe["subprocess"].startswith("blocked:"), probe
 
     tests = run_action(app, lambda panel: panel.run_tests())
     assert "Ran 4 tests" in tests, tests
