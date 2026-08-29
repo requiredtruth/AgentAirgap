@@ -31,6 +31,8 @@ jobs:
           grep -q 'cli.sh' README.md
       - name: Exercise GUI actions offscreen
         run: |
+          sudo apt-get update
+          sudo apt-get install -y libegl1
           python -m venv .venv
           ./.venv/bin/python -m pip install -e . PySide6
           QT_QPA_PLATFORM=offscreen PROJECT_GUI_SMOKE=1 ./run.sh
